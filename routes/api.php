@@ -35,6 +35,10 @@ Route::apiResource('transaksis', TransaksiController::class);
 use App\Http\Controllers\LokasiController;
 
 Route::apiResource('lokasis', LokasiController::class);
-use App\Http\Controllers\LokasiBankSampahController;
 
-Route::apiResource('lokasi-bank-sampah', LokasiBankSampahController::class);
+use App\Http\Controllers\AuthController;
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
