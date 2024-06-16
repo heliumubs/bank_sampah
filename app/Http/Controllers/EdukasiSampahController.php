@@ -9,7 +9,7 @@ class EdukasiSampahController extends Controller
 {
     public function index()
     {
-        return EdukasiSampah::all();
+        return Edukasi_sampah::all();
     }
 
     public function store(Request $request)
@@ -21,17 +21,18 @@ class EdukasiSampahController extends Controller
             'penulis' => 'required|string|max:255',
         ]);
 
-        return EdukasiSampah::create($request->all());
+        return Edukasi_sampah::create($request->all());
     }
 
     public function show($id)
     {
-        return EdukasiSampah::findOrFail($id);
+        return Edukasi_sampah::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $edukasiSampah = EdukasiSampah::findOrFail($id);
+        $edukasiSampah = Edukasi_sampah::findOrFail($id);
+        
 
         $request->validate([
             'judul' => 'sometimes|required|string|max:255',
@@ -40,14 +41,15 @@ class EdukasiSampahController extends Controller
             'penulis' => 'sometimes|required|string|max:255',
         ]);
 
+        var_dump($request);die;
         $edukasiSampah->update($request->all());
-
+        
         return $edukasiSampah;
     }
 
     public function destroy($id)
     {
-        $edukasiSampah = EdukasiSampah::findOrFail($id);
+        $edukasiSampah = Edukasi_sampah::findOrFail($id);
         $edukasiSampah->delete();
 
         return response()->json(['message' => 'Edukasi Sampah deleted successfully']);

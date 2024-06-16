@@ -33,8 +33,10 @@ use App\Http\Controllers\TransaksiController;
 
 Route::apiResource('transaksis', TransaksiController::class);
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\KoinController;
 
 Route::apiResource('lokasis', LokasiController::class);
+Route::apiResource('koins', KoinController::class);
 
 use App\Http\Controllers\AuthController;
 
