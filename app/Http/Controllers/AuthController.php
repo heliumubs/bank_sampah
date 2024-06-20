@@ -18,7 +18,7 @@ class AuthController extends Controller
         //     'email' => 'required|string|email|max:255|unique:users',
         //     'password' => 'required|string|min:8|confirmed',
         // ]);
-
+            // var_dump($request->password);die;
         $datauser=User::where('email',$request->email)->count();
         // dd($datauser);
             if($datauser>0){
@@ -27,6 +27,7 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'role' => $request->role,
                 'password' => Hash::make($request->password),
             ]);
     
@@ -36,6 +37,7 @@ class AuthController extends Controller
                 'message' => 'User registered successfully',
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'data'=>$user
             ], 201);
         }
     

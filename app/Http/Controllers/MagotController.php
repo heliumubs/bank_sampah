@@ -9,49 +9,49 @@ class MagotController extends Controller
 {
     public function index()
     {
-        return Lokasi::all();
+        return Magot::all();
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama_lokasi' => 'required|string|max:255',
+            'nama_Magot' => 'required|string|max:255',
             'alamat' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'kontak' => 'required|string|max:255',
         ]);
 
-        return Lokasi::create($request->all());
+        return Magot::create($request->all());
     }
 
     public function show($id)
     {
-        return Lokasi::findOrFail($id);
+        return Magot::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $lokasi = Lokasi::findOrFail($id);
+        $Magot = Magot::findOrFail($id);
 
         $request->validate([
-            'nama_lokasi' => 'sometimes|required|string|max:255',
+            'nama_Magot' => 'sometimes|required|string|max:255',
             'alamat' => 'sometimes|required|string',
             'latitude' => 'sometimes|required|numeric',
             'longitude' => 'sometimes|required|numeric',
             'kontak' => 'sometimes|required|string|max:255',
         ]);
 
-        $lokasi->update($request->all());
+        $Magot->update($request->all());
 
-        return $lokasi;
+        return $Magot;
     }
 
     public function destroy($id)
     {
-        $lokasi = Lokasi::findOrFail($id);
-        $lokasi->delete();
+        $Magot = Magot::findOrFail($id);
+        $Magot->delete();
 
-        return response()->json(['message' => 'Lokasi deleted successfully']);
+        return response()->json(['message' => 'Magot deleted successfully']);
     }
 }

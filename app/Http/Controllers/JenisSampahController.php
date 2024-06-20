@@ -9,7 +9,7 @@ class JenisSampahController extends Controller
 {
     public function index()
     {
-        return JenisSampah::all();
+        return Jenis_sampah::all();
     }
 
     public function store(Request $request)
@@ -19,17 +19,17 @@ class JenisSampahController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        return JenisSampah::create($request->all());
+        return Jenis_sampah::create($request->all());
     }
 
     public function show($id)
     {
-        return JenisSampah::findOrFail($id);
+        return Jenis_sampah::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $jenisSampah = JenisSampah::findOrFail($id);
+        $jenisSampah = Jenis_sampah::findOrFail($id);
 
         $request->validate([
             'nama' => 'sometimes|required|string|max:255|unique:jenis_sampahs,nama,' . $jenisSampah->id,
@@ -43,7 +43,7 @@ class JenisSampahController extends Controller
 
     public function destroy($id)
     {
-        $jenisSampah = JenisSampah::findOrFail($id);
+        $jenisSampah = Jenis_sampah::findOrFail($id);
         $jenisSampah->delete();
 
         return response()->json(['message' => 'Jenis Sampah deleted successfully']);
