@@ -42,7 +42,6 @@ Route::apiResource('koins', KoinController::class);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::get('/csrf-token', [AuthController::class, 'getCsrfToken']);
 
 
 Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
