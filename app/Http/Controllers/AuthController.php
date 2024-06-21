@@ -10,6 +10,10 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function getCsrfToken()
+    {
+        return response()->json(['csrfToken' => csrf_token()]);
+    }
     public function register(Request $request)
     {
         // var_dump($request);die;
