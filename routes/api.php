@@ -41,6 +41,7 @@ Route::apiResource('koins', KoinController::class);
 
 
 Route::post('register', [AuthController::class, 'register']);
+
 Route::post('login', [AuthController::class, 'login']);
 
 
