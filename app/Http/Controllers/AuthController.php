@@ -22,7 +22,7 @@ class AuthController extends Controller
         //     'email' => 'required|string|email|max:255|unique:users',
         //     'password' => 'required|string|min:8|confirmed',
         // ]);
-            // var_dump($request->password);die;
+            // echo($request->role);die;
         $datauser=User::where('email',$request->email)->count();
         // dd($datauser);
             if($datauser>0){

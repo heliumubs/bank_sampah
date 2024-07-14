@@ -15,43 +15,58 @@ class MagotController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_Magot' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'kontak' => 'required|string|max:255',
+            'nama' => 'required|string',
+            'jenis' => 'required|string',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
+            'deskripsi' => 'required|string',
         ]);
 
-        return Magot::create($request->all());
+        $fotoPath = $request->file('foto')->store('magot_photos'); // Simpan foto ke storage
+
+        $magot = new Magot([
+            'nama' => $request->get('nama'),
+            'jenis' => $request->get('jenis'),
+            'foto' => $fotoPath,
+            'deskripsi' => $request->get('deskripsi'),
+        ]);
+
+        $magot->save();
+
+        return response()->json(['message' => 'Magot created', 'data' => $magot]);
     }
 
-    public function show($id)
+    public function show(Magot $magot)
     {
-        return Magot::findOrFail($id);
+        return $magot;
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Magot $magot)
     {
-        $Magot = Magot::findOrFail($id);
-
         $request->validate([
-            'nama_Magot' => 'sometimes|required|string|max:255',
-            'alamat' => 'sometimes|required|string',
-            'latitude' => 'sometimes|required|numeric',
-            'longitude' => 'sometimes|required|numeric',
-            'kontak' => 'sometimes|required|string|max:255',
+            'nama' => 'required|string',
+            'jenis' => 'required|string',
+            'deskripsi' => 'required|string',
         ]);
 
-        $Magot->update($request->all());
+        if ($request->hasFile('foto')) {
+            Storage::delete($magot->foto); // Hapus foto lama dari storage
+            $fotoPath = $request->file('foto')->store('magot_photos'); // Simpan foto baru ke storage
+            $magot->foto = $fotoPath;
+        }
 
-        return $Magot;
+        $magot->nama = $request->get('nama');
+        $magot->jenis = $request->get('jenis');
+        $magot->deskripsi = $request->get('deskripsi');
+        $magot->save();
+
+        return response()->json(['message' => 'Magot updated', 'data' => $magot]);
     }
 
-    public function destroy($id)
+    public function destroy(Magot $magot)
     {
-        $Magot = Magot::findOrFail($id);
-        $Magot->delete();
+        Storage::delete($magot->foto); // Hapus foto dari storage sebelum menghapus data
+        $magot->delete();
 
-        return response()->json(['message' => 'Magot deleted successfully']);
+        return response()->json(['message' => 'Magot deleted']);
     }
 }

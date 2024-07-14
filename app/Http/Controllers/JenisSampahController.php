@@ -8,44 +8,49 @@ use Illuminate\Http\Request;
 class JenisSampahController extends Controller
 {
     public function index()
-    {
-        return Jenis_sampah::all();
-    }
+{
+    $jenisSampahs = Jenis_sampah::all();
+    return response()->json($jenisSampahs);
+}
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255|unique:jenis_sampahs',
-            'deskripsi' => 'nullable|string',
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'nama' => 'required|string|max:255|unique:jenis_sampahs',
+        'deskripsi' => 'nullable|string',
+    ]);
 
-        return Jenis_sampah::create($request->all());
-    }
+    $jenisSampah = Jenis_sampah::create($request->all());
 
-    public function show($id)
-    {
-        return Jenis_sampah::findOrFail($id);
-    }
+    return response()->json($jenisSampah, 201);
+}
 
-    public function update(Request $request, $id)
-    {
-        $jenisSampah = Jenis_sampah::findOrFail($id);
+public function show($id)
+{
+    $jenisSampah = Jenis_sampah::findOrFail($id);
+    return response()->json($jenisSampah);
+}
 
-        $request->validate([
-            'nama' => 'sometimes|required|string|max:255|unique:jenis_sampahs,nama,' . $jenisSampah->id,
-            'deskripsi' => 'nullable|string',
-        ]);
+public function update(Request $request, $id)
+{
+    $jenisSampah = Jenis_sampah::findOrFail($id);
 
-        $jenisSampah->update($request->all());
+    $request->validate([
+        'nama' => 'sometimes|required|string|max:255|unique:jenis_sampahs,nama,' . $jenisSampah->id,
+        'deskripsi' => 'nullable|string',
+    ]);
 
-        return $jenisSampah;
-    }
+    $jenisSampah->update($request->all());
 
-    public function destroy($id)
-    {
-        $jenisSampah = Jenis_sampah::findOrFail($id);
-        $jenisSampah->delete();
+    return response()->json($jenisSampah);
+}
 
-        return response()->json(['message' => 'Jenis Sampah deleted successfully']);
-    }
+public function destroy($id)
+{
+    $jenisSampah = Jenis_sampah::findOrFail($id);
+    $jenisSampah->delete();
+
+    return response()->json(['message' => 'Jenis Sampah deleted successfully']);
+}
+
 }

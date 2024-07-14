@@ -9,10 +9,9 @@ class transaksi extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama_lokasi',
-        'alamat',
-        'latitude',
-        'longitude',
-        'kontak',
+        'pengguna_id',
+        'sampah_id',
+        'kuantitas',
+        'nilai',
     ];
 }

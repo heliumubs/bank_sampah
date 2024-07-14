@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMagotsTable extends Migration
+class CreateBeritasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateMagotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('magots', function (Blueprint $table) {
+        Schema::create('beritas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('jenis');
-            $table->string('foto');
-            $table->string('deskripsi');
+            $table->string('title');
+            $table->text('content');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateMagotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('magots');
+        Schema::dropIfExists('beritas');
     }
 }

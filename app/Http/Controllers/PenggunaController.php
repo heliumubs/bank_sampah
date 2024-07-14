@@ -18,7 +18,7 @@ class PenggunaController extends Controller
             'id_user' => 'required|string|max:255',
             'alamat' => 'required|string',
             'telepon' => 'required|string|max:15',
-            'nomor_identifikasi' => 'required|string|unique:penggunas,nomor_identifikasi',
+            // 'nomor_identifikasi' => 'required|string|unique:penggunas,nomor_identifikasi',
             'jenis_pengguna' => 'required|in:penyetor,pengelola,pembeli',
         ]);
 
@@ -27,7 +27,7 @@ class PenggunaController extends Controller
 
     public function show($id)
     {
-        return Pengguna::findOrFail($id);
+        return Pengguna::where('id_user',$id)->get();
     }
 
     public function update(Request $request, $id)

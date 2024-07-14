@@ -9,49 +9,52 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        return Transaksi::all();
+        $transaksis = Transaksi::all();
+        return response()->json($transaksis);
     }
 
+    // Store a newly created resource in storage.
     public function store(Request $request)
     {
+        // echo("ok");die;
         $request->validate([
-            'nama_Transaksi' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'kontak' => 'required|string|max:255',
+            'pengguna_id' => 'required|exists:penggunas,id',
+            // 'sampah_id' => 'required|exists:sampahs,id',
+            'kuantitas' => 'required|numeric',
+            'nilai' => 'required|numeric',
         ]);
 
-        return Transaksi::create($request->all());
+        $transaksi = Transaksi::create($request->all());
+        return response()->json($transaksi, 201);
     }
 
+    // Display the specified resource.
     public function show($id)
     {
-        return Transaksi::findOrFail($id);
+        $transaksi = Transaksi::findOrFail($id);
+        return response()->json($transaksi);
     }
 
+    // Update the specified resource in storage.
     public function update(Request $request, $id)
     {
-        $Transaksi = Transaksi::findOrFail($id);
-
         $request->validate([
-            'nama_Transaksi' => 'sometimes|required|string|max:255',
-            'alamat' => 'sometimes|required|string',
-            'latitude' => 'sometimes|required|numeric',
-            'longitude' => 'sometimes|required|numeric',
-            'kontak' => 'sometimes|required|string|max:255',
+            'pengguna_id' => 'required|exists:penggunas,id',
+            'sampah_id' => 'required|exists:sampahs,id',
+            'kuantitas' => 'required|numeric',
+            'nilai' => 'required|numeric',
         ]);
 
-        $Transaksi->update($request->all());
-
-        return $Transaksi;
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->update($request->all());
+        return response()->json($transaksi);
     }
 
+    // Remove the specified resource from storage.
     public function destroy($id)
     {
-        $Transaksi = Transaksi::findOrFail($id);
-        $Transaksi->delete();
-
-        return response()->json(['message' => 'Transaksi deleted successfully']);
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->delete();
+        return response()->json(null, 204);
     }
 }

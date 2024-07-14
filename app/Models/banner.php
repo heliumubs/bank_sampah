@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class magot extends Model
+class banner extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama',
-        'jenis',
-        'foto',
-        'deskripsi',
+        'photo',
     ];
 }
